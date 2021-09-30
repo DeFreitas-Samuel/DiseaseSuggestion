@@ -32,7 +32,7 @@ namespace ProyectoFinalXamarin.Droid
     {
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

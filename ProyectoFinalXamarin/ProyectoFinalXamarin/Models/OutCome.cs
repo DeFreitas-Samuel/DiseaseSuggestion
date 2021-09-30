@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace ProyectoFinalXamarin.Models
 {
-   public class OutComeResponse
+   public class OutCome
     {
         [JsonPropertyName("status")]
         public string Status { get; set; }
