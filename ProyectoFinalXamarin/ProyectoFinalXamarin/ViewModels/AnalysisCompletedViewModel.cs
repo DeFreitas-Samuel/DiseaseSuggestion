@@ -11,18 +11,20 @@ namespace ProyectoFinalXamarin.ViewModels
     {
         public ICommand NavigateResultCommand { get; }
         public ICommand NavigateRecommendationCommand { get; }
-        public AnalysisCompletedViewModel(INavigationService navigationService)
+        public AnalysisCompletedViewModel(INavigationService navigationService): base(navigationService)
         {
-            _navigationService = navigationService;
             NavigateResultCommand = new DelegateCommand(OnNavigationResults);
             NavigateRecommendationCommand = new DelegateCommand(OnNavigationRecommendations);
         }
 
-        private async void OnNavigationRecommendations() => await _navigationService.NavigateAsync("RecommendTestPage");
+        private async void OnNavigationRecommendations()
+        {
+            await NavigationService.NavigateAsync(NavigationConstants.Paths.RecommendTest);
+        }
 
-
-        private async void OnNavigationResults() => await _navigationService.NavigateAsync("ResultsPage");
-
-        INavigationService _navigationService;
+        private async void OnNavigationResults()
+        {
+            await NavigationService.NavigateAsync(NavigationConstants.Paths.Results);
+        }
     }
 }

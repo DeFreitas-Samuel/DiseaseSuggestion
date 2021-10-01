@@ -10,16 +10,17 @@ namespace ProyectoFinalXamarin.ViewModels
     public class HomeViewModel : BaseViewModel
     {
         public ICommand NavigateCommand { get; }
-        public HomeViewModel(INavigationService navigationService)
+        public HomeViewModel(INavigationService navigationService): base(navigationService)
         {
-
-            _navigationService = navigationService;
             NavigateCommand = new DelegateCommand(OnNavigation);
         }
 
-        private async void OnNavigation() => await _navigationService.NavigateAsync("AnalysisCompletedPage");
+        private async void OnNavigation()
+        {
+            await NavigationService.NavigateAsync(NavigationConstants.Paths.AnalysisCompleted);
+        }
 
 
-        INavigationService _navigationService;
+
     }
 }
