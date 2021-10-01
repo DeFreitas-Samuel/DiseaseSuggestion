@@ -7,8 +7,7 @@ using System.Windows.Input;
 
 namespace ProyectoFinalXamarin.ViewModels
 {
-    
-    class AnalysisCompletedViewModel
+    public class AnalysisCompletedViewModel : BaseViewModel
     {
         public ICommand NavigateResultCommand { get; }
         public ICommand NavigateRecommendationCommand { get; }

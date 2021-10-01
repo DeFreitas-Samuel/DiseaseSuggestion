@@ -9,16 +9,21 @@ using System.Threading.Tasks;
 namespace ProyectoFinalXamarin.Services
 {
     class MedicalApiService : IMedicalApiService
-    {
-        private const string SessionId = "KEY HERE";
+    {   
         IJsonSerializerService serializer = new JsonSerializerService();
+        private Config config = new Config();
+        private string _sessionId;
 
+        public MedicalApiService()
+        {
+            config = new Config();
+            _sessionId = config.SessionId;
+        }
         //Get Suggestions Task
         public async Task<Suggest> GetSuggestAsync()
         {
-             
             HttpClient httpClient = new HttpClient();
-            var response = await httpClient.GetAsync($"https://api.endlessmedical.com/v1/dx/GetSuggestedSpecializations?SessionID={SessionId}&NumberOfResults=10");
+            var response = await httpClient.GetAsync(config.GetSuggestionsURL);
 
             if (response.IsSuccessStatusCode)
             {
@@ -34,7 +39,7 @@ namespace ProyectoFinalXamarin.Services
         public async Task<OutCome> GetOutcomesAsync()
         {
             HttpClient httpClient = new HttpClient();
-            var response = await httpClient.GetAsync("https://api.endlessmedical.com/v1/dx/GetOutcomes");
+            var response = await httpClient.GetAsync(config.GetOutcomesURL);
             if (response.IsSuccessStatusCode)
             {
                 var responseString = await response.Content.ReadAsStringAsync();
@@ -47,7 +52,7 @@ namespace ProyectoFinalXamarin.Services
         //Get Diseases Task
         public async Task<Disease> GetDiseasesAsync()
         {
-            var api = RestService.For<IMedicalApiService>("https://api.endlessmedical.com/");
+            var api = RestService.For<IMedicalApiService>(config.GetDiseasesURL);
             var response = await api.GetDiseasesAsync();
             return response;
         }

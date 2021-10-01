@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ProyectoFinalXamarin.ViewModels
 {
-    class RecommendTestViewModel
+    public class RecommendTestViewModel : BaseViewModel
     {
     }
 }
