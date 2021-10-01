@@ -4,6 +4,12 @@
              xmlns:prism="http://prismlibrary.com"
              x:Class="ProyectoFinalXamarin.App">
     <Application.Resources>
-
+        <ResourceDictionary>
+            <Color x:Key="Primary">#395C7C</Color>
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor" Value="{StaticResource Primary}" />
+                <Setter Property="BarTextColor" Value="White" />
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </prism:PrismApplication>

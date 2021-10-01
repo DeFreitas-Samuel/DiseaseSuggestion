@@ -19,11 +19,13 @@ namespace ProyectoFinalXamarin
         protected override void OnInitialized()
         {
             InitializeComponent();
+            NavigationService.NavigateAsync("NavigationPage/HomePage");
 
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<HomePage, HomeViewModel>();
             containerRegistry.RegisterForNavigation<AnalysisCompletedPage, AnalysisCompletedViewModel>();
             containerRegistry.RegisterForNavigation<RecommendTestPage, RecommendTestViewModel>();

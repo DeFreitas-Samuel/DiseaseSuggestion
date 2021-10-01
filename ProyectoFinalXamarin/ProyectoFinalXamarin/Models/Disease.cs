@@ -1,17 +1,18 @@
-﻿using Newtonsoft.Json;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace ProyectoFinalXamarin.Models
 {
    public class Disease
     {
-        [JsonProperty("status")]
+        [JsonPropertyName("status")]
         public string Status { get; set; }
 
-        [JsonProperty("data")]
+        [JsonPropertyName("data")]
         public ObservableCollection<string> Data { get; set; }
     }
 }
