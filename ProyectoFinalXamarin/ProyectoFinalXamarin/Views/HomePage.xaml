@@ -47,10 +47,11 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
         <StackLayout Orientation="Horizontal" BackgroundColor="#395c7c" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="4" VerticalOptions="Center">
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer   Command="{Binding NavigateCommand}"/>
+            </StackLayout.GestureRecognizers>
             <Image Source="magnifierIcon" Margin="35,15,15,15"/>
             <Label Text="Analize" TextColor="White" FontSize="Large" Margin="15"/>
-            
-
         </StackLayout>
 
     </Grid>

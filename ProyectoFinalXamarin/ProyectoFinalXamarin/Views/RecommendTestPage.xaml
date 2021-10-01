@@ -4,7 +4,7 @@
              x:Class="ProyectoFinalXamarin.Views.RecommendTestPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
+            <Label Text="RecommendedTests"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
         </StackLayout>
