@@ -1,58 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ProyectoFinalXamarin.Views.HomePage"
-             Title="Symptoms">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            
-        </Grid.ColumnDefinitions>
-        <Entry Placeholder="Add a new Symptom"
-               Grid.Column="1"
-               Grid.ColumnSpan="3"
-               Grid.Row="1"/>
-            <ImageButton
-                    BackgroundColor="#00FFFFFF"
-                    Source="addIcon" 
-                    Grid.Row="1"
-                    Grid.Column="4"/>
+             x:Class="ProyectoFinalXamarin.Views.HomePage">
+    
+    <NavigationPage.TitleView>
+        <Label Text="Symtoms" HorizontalOptions="Center" TextColor="#FFF" FontSize="Large"/>
+    </NavigationPage.TitleView>
+    
+    <Grid RowDefinitions="Auto, Auto, Auto, Auto" ColumnDefinitions="*">
         
-            <Label Text="Symptom added"
-                Grid.Row="3"
-                Grid.Column="1"
-                Grid.ColumnSpan="4"
-                FontSize="30"
-                HorizontalOptions="CenterAndExpand"/>
-        <CollectionView ItemsSource="{Binding }" BackgroundColor="#CED4CF" Grid.Row="4" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="4">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-        <StackLayout Orientation="Horizontal" BackgroundColor="#395c7c" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="4" VerticalOptions="Center">
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,50,0,0">
+            <Entry Placeholder="Add a new Symptom" HorizontalOptions="StartAndExpand"/>
+            <ImageButton BackgroundColor="#00FFFFFF" Source="addIcon" HorizontalOptions="EndAndExpand" HeightRequest="40" Margin="20,0,0,0"/>
+        </StackLayout>
+       
+        <Label Text="Symptoms added" Grid.Row="1" Grid.Column="0" FontSize="25" HorizontalOptions="CenterAndExpand" Margin="0,70,0,0"/>
+
+        <StackLayout Grid.Row="2" Grid.Column="0" Padding="20,0,20,0" Margin="0,30,0,0">
+            <CollectionView  ItemsSource="{Binding .}" BackgroundColor="#CED4CF" HeightRequest="110">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+        
+        <StackLayout Grid.Row="3" Grid.Column="0" Orientation="Horizontal" HorizontalOptions="Center" BackgroundColor="#395C7C" Margin="0,90,0,0" HeightRequest="60" Padding="70,0,70,0">
             <StackLayout.GestureRecognizers>
                 <TapGestureRecognizer   Command="{Binding NavigateCommand}"/>
             </StackLayout.GestureRecognizers>
-            <Image Source="magnifierIcon" Margin="35,15,15,15"/>
-            <Label Text="Analize" TextColor="White" FontSize="Large" Margin="15"/>
+            
+            <Image Source="magnifierIcon" VerticalOptions="Center" HeightRequest="30" HorizontalOptions="Start" Margin="0,0,10,0"/>
+            <Label Text="Analize" TextColor="#FFF" FontSize="Large" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
         </StackLayout>
-
     </Grid>
 </ContentPage>
