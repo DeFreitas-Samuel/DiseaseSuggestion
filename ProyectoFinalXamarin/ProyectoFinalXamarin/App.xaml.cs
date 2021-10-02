@@ -19,7 +19,7 @@ namespace ProyectoFinalXamarin
         protected override void OnInitialized()
         {
             InitializeComponent();
-            NavigationService.NavigateAsync("NavigationPage/HomePage");
+            NavigationService.NavigateAsync(NavigationConstants.Paths.HomeNavigation);
 
         }
 
