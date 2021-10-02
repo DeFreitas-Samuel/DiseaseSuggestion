@@ -1,5 +1,10 @@
 # DiseaseSuggestion
 
+DiseaseSuggestion is an app that will show the user what possible diseases and conditions they could have based on group of symptoms that the user provided; also the app will provide a set of recommended test so the user nows what are the next steps in treating their symptoms.
+
+This app was developed using XamarinForms and it uses the EndlessMedical API to perform its predictions.  
+
+
 ## Home Page
 ![Screenshot_1633137742](https://user-images.githubusercontent.com/52897285/135699532-c1327cdc-2f81-4faf-9415-32e94d4aca42.png)
 
