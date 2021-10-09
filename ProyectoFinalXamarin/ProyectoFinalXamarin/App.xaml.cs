@@ -1,6 +1,7 @@
 ﻿using Prism;
 using Prism.Ioc;
 using Prism.Unity;
+using ProyectoFinalXamarin.Services;
 using ProyectoFinalXamarin.ViewModels;
 using ProyectoFinalXamarin.Views;
 using System;
@@ -25,12 +26,14 @@ namespace ProyectoFinalXamarin
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<HomePage, HomeViewModel>();
             containerRegistry.RegisterForNavigation<AnalysisCompletedPage, AnalysisCompletedViewModel>();
             containerRegistry.RegisterForNavigation<RecommendTestPage, RecommendTestViewModel>();
             containerRegistry.RegisterForNavigation<ResultsPage, ResultsViewModel>();
             containerRegistry.RegisterForNavigation<TermsAndConditionsPage, TermsAndConditionsViewModel>();
+            containerRegistry.RegisterInstance<IMedicalApiService>(new MedicalApiService());
         }
     }
 }

@@ -23,13 +23,20 @@ namespace ProyectoFinalXamarin.ViewModels
 
         private async void OnSignIn()
         {
-            var session = await _medicalApiService.GetSessionAsync();
-            var termsAndConditions = await _medicalApiService.PostTermsConditionsAsync();
-            if (session && termsAndConditions)
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
-                await NavigationService.NavigateAsync(NavigationConstants.Paths.HomeNavigation);
+                var session = await _medicalApiService.GetSessionAsync();
+                var termsAndConditions = await _medicalApiService.PostTermsConditionsAsync();
+                if (session && termsAndConditions)
+                {
+                    await NavigationService.NavigateAsync(NavigationConstants.Paths.HomeNavigation);
+                }
+                else
+                {
+                    await Prism.PrismApplicationBase.Current.MainPage.DisplayAlert("Alert", "There was a problem with the connection to the API", "OK");
+                }
             }
-            else
+            else 
             {
                 await Prism.PrismApplicationBase.Current.MainPage.DisplayAlert("Alert", "There was a problem with the connection to the internet", "OK");
             }
