@@ -19,7 +19,7 @@ namespace ProyectoFinalXamarin
         protected override void OnInitialized()
         {
             InitializeComponent();
-            NavigationService.NavigateAsync(NavigationConstants.Paths.HomeNavigation);
+            NavigationService.NavigateAsync(NavigationConstants.Paths.TermsAndConditions);
 
         }
 
@@ -30,6 +30,7 @@ namespace ProyectoFinalXamarin
             containerRegistry.RegisterForNavigation<AnalysisCompletedPage, AnalysisCompletedViewModel>();
             containerRegistry.RegisterForNavigation<RecommendTestPage, RecommendTestViewModel>();
             containerRegistry.RegisterForNavigation<ResultsPage, ResultsViewModel>();
+            containerRegistry.RegisterForNavigation<TermsAndConditionsPage, TermsAndConditionsViewModel>();
         }
     }
 }

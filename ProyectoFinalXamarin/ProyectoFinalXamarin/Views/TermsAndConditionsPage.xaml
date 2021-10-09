@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProyectoFinalXamarin.Views.TermsAndConditionsPage">
+    <ContentPage.Content>
+
+        <StackLayout>
+            <StackLayout>
+                <Label Text="Terms and Conditions"
+                       HorizontalOptions="Center"
+                       FontSize="Large"
+                       FontAttributes="Bold"
+                       Margin="0,0,0,0"/>
+                <Image Source="handshakeIcon"/>
+                <Label Margin="20">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="To be able to use our Medical API you must agree to the " FontSize="Medium"/>
+                            <Span Text="Terms and Conditions"
+                                  TextColor="Blue"
+                                  TextDecorations="Underline"
+                            FontSize="Medium">
+                                <Span.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding UrlTapCommand}"
+                                          CommandParameter="https://endlessmedical.com/termsofuse/" />
+                                </Span.GestureRecognizers>
+                            </Span>
+                            <Span Text=" of Endless Medical."
+                                  FontSize="Medium"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" Margin="20">
+                <CheckBox x:Name="checkBox"  VerticalOptions="Start" Margin="0,40"/>
+                <Label Text="I have read, understood and I accept and agree to comply with the Terms of Use of EndlessMedicalAPI and Endless Medical services. The Terms of Use are available on endlessmedical.com"
+                       Padding="10"
+                       FontSize="Medium">
+                </Label>
+            </StackLayout>
+            <StackLayout>
+                <Button Text="Connect and Continue" IsEnabled="False"  Command="{Binding SignInCommand}">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button"
+                         Binding="{Binding Source={x:Reference checkBox}, Path=IsChecked}"
+                         Value="true">
+                            <Setter Property="IsEnabled"
+                        Value="True" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

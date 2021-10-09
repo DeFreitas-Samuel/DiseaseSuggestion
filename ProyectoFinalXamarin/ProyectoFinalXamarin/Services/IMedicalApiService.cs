@@ -14,5 +14,7 @@ namespace ProyectoFinalXamarin.Services
 
         [Get("/v1/dx/GetOutcomes")]
         Task<Disease> GetDiseasesAsync();
+        Task<bool> GetSessionAsync();
+        Task<bool> PostTermsConditionsAsync();
     }
 }

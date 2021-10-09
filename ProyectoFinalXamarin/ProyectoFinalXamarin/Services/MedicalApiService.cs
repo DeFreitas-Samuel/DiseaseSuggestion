@@ -12,12 +12,12 @@ namespace ProyectoFinalXamarin.Services
     {   
         IJsonSerializerService serializer = new JsonSerializerService();
         private Config config = new Config();
-        private string _sessionId;
+
 
         public MedicalApiService()
         {
             config = new Config();
-            _sessionId = config.SessionId;
+
         }
         //Get Suggestions Task
         public async Task<Suggest> GetSuggestAsync()
@@ -55,6 +55,35 @@ namespace ProyectoFinalXamarin.Services
             var api = RestService.For<IMedicalApiService>(config.GetDiseasesURL);
             var response = await api.GetDiseasesAsync();
             return response;
+        }
+
+        public async Task<bool> GetSessionAsync()
+        {
+            HttpClient httpClient = new HttpClient();
+            var response = await httpClient.GetAsync(config.GetSessionURL);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseString = await response.Content.ReadAsStringAsync();
+                var suggestResponse = serializer.Deserialize<InitializeSession>(responseString);
+                config.SessionId = suggestResponse.SessionID;
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> PostTermsConditionsAsync()
+        {
+            HttpClient httpClient = new HttpClient();
+            var response = await httpClient.PostAsync(config.TermsAndConditionsURL1 + config.SessionId + config.TermsAndConditionsURL2, null);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

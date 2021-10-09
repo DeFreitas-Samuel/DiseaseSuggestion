@@ -13,6 +13,7 @@ namespace ProyectoFinalXamarin
             public const string RecommendTest = "RecommendTestPage";
             public const string Results = "ResultsPage";
             public const string HomeNavigation = "NavigationPage/HomePage";
+            public const string TermsAndConditions = "NavigationPage/HomePage";
         }
     }
 }
