@@ -20,19 +20,25 @@ namespace ProyectoFinalXamarin.ViewModels
 
         public ICommand UrlTapCommand { get; }
         public ICommand SignInCommand { get; }
+        public bool IsChecked { get; set; } = false;
+        public bool IsRunning { get; set; } = false;
 
         private async void OnSignIn()
         {
             if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
+                IsChecked = false;
+                IsRunning = true;
                 var session = await _medicalApiService.GetSessionAsync();
                 var termsAndConditions = await _medicalApiService.PostTermsConditionsAsync();
                 if (session && termsAndConditions)
                 {
+                    IsRunning = false;
                     await NavigationService.NavigateAsync(NavigationConstants.Paths.HomeNavigation);
                 }
                 else
                 {
+                    IsRunning = false;
                     await Prism.PrismApplicationBase.Current.MainPage.DisplayAlert("Alert", "There was a problem with the connection to the API", "OK");
                 }
             }

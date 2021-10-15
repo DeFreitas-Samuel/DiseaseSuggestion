@@ -4,7 +4,7 @@
              x:Class="ProyectoFinalXamarin.Views.TermsAndConditionsPage">
 
     
-    <StackLayout>
+    <StackLayout VerticalOptions="Center">
         <Label Text="Terms and Conditions"
             HorizontalOptions="Center"
             HorizontalTextAlignment="Center"
@@ -21,7 +21,7 @@
                           TextDecorations="Underline"
                           FontSize="Medium">
                         <Span.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding }"
+                            <TapGestureRecognizer Command="{Binding UrlTapCommand}"
                                                   CommandParameter="https://endlessmedical.com/termsofuse/" />
                         </Span.GestureRecognizers>
                     </Span>
@@ -32,22 +32,15 @@
         </Label>
 
         <StackLayout Orientation="Horizontal">
-            <CheckBox x:Name="checkBox"  VerticalOptions="Start" Margin="0,40"/>
+            <CheckBox x:Name="checkBox"  VerticalOptions="Start" Margin="0,40" IsChecked="{Binding IsChecked }"/>
             <Label Text="I have read, understood and I accept and agree to comply with the Terms of Use of EndlessMedicalAPI and Endless Medical services. The Terms of Use are available on endlessmedical.com"
                    Padding="10"
                    FontSize="Medium">
             </Label>
         </StackLayout>
-        <Button Text="Connect and Continue" IsEnabled="False"  Command="{Binding SignInCommand}">
-            <Button.Triggers>
-                <DataTrigger TargetType="Button"
-                             Binding="{Binding Source={x:Reference checkBox}, Path=IsChecked}"
-                             Value="true">
-                    <Setter Property="IsEnabled"
-                            Value="True" />
-                </DataTrigger>
-            </Button.Triggers>
-        </Button>
-        
-     </StackLayout>
+        <Button Text="Connect and Continue" Command="{Binding SignInCommand}" IsEnabled="{Binding IsChecked}" />
+        <ActivityIndicator IsRunning="{Binding IsRunning}"/>
+
+
+    </StackLayout>
 </ContentPage>
