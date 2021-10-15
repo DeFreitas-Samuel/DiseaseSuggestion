@@ -33,7 +33,8 @@ namespace ProyectoFinalXamarin
             containerRegistry.RegisterForNavigation<RecommendTestPage, RecommendTestViewModel>();
             containerRegistry.RegisterForNavigation<ResultsPage, ResultsViewModel>();
             containerRegistry.RegisterForNavigation<TermsAndConditionsPage, TermsAndConditionsViewModel>();
-            containerRegistry.RegisterInstance<IMedicalApiService>(new MedicalApiService());
+            containerRegistry.Register<IMedicalApiService, MedicalApiService>();
+            containerRegistry.Register<IJsonSerializerService, JsonSerializerService>();
         }
     }
 }

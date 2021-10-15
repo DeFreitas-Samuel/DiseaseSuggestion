@@ -1,9 +1,11 @@
 ﻿using Prism.Commands;
 using Prism.Navigation;
+using Prism.Services.Dialogs;
 using ProyectoFinalXamarin.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
 
@@ -11,40 +13,58 @@ namespace ProyectoFinalXamarin.ViewModels
 {
     public class TermsAndConditionsViewModel: BaseViewModel
     {
-        public TermsAndConditionsViewModel(INavigationService navigationService, IMedicalApiService medicalApiService) : base(navigationService)
+        public TermsAndConditionsViewModel(INavigationService navigationService, IMedicalApiService medicalApiService, IDialogService dialogService) : base(navigationService)
         {
             _medicalApiService = medicalApiService;
             UrlTapCommand = new DelegateCommand<string>(OnUrlTap);
             SignInCommand = new DelegateCommand(OnSignIn);
-        }
+            _dialogService = dialogService;
 
+        }
+        private IDialogService _dialogService;
         public ICommand UrlTapCommand { get; }
         public ICommand SignInCommand { get; }
-        public bool IsChecked { get; set; } = false;
+        public bool CheckBoxIsChecked { get; set; } = false;
         public bool IsRunning { get; set; } = false;
+        public bool CheckBoxIsEnabled { get; set; } = true;
 
         private async void OnSignIn()
         {
+            SecureStorage.RemoveAll();
+            string token = await SecureStorage.GetAsync("token");
+
+
             if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
-                IsChecked = false;
-                IsRunning = true;
-                var session = await _medicalApiService.GetSessionAsync();
-                var termsAndConditions = await _medicalApiService.PostTermsConditionsAsync();
-                if (session && termsAndConditions)
+                if (string.IsNullOrEmpty(token))
                 {
-                    IsRunning = false;
-                    await NavigationService.NavigateAsync(NavigationConstants.Paths.HomeNavigation);
+                    try
+                    {
+                        await _medicalApiService.LoginAsync();
+                        token = await SecureStorage.GetAsync("token");
+                        if (!string.IsNullOrEmpty(token))
+                        {
+                            await NavigationService.NavigateAsync(NavigationConstants.Paths.HomeNavigation);
+                        }
+                        else
+                        {
+                            await _dialogService.ShowDialogAsync("There was a problem");
+                        }
+                    }
+
+                    catch (Exception e)
+                    {
+                        await _dialogService.ShowDialogAsync(e.Message);
+                    }
                 }
-                else
+                else 
                 {
-                    IsRunning = false;
-                    await Prism.PrismApplicationBase.Current.MainPage.DisplayAlert("Alert", "There was a problem with the connection to the API", "OK");
+                    await NavigationService.NavigateAsync(NavigationConstants.Paths.HomeNavigation);
                 }
             }
             else 
             {
-                await Prism.PrismApplicationBase.Current.MainPage.DisplayAlert("Alert", "There was a problem with the connection to the internet", "OK");
+                await _dialogService.ShowDialogAsync("There was a problem with the connection to the internet");
             }
         }
 

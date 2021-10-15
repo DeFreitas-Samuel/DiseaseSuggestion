@@ -1,34 +1,37 @@
-﻿using ProyectoFinalXamarin.Models;
+﻿using Prism.Services.Dialogs;
+using ProyectoFinalXamarin.Models;
 using Refit;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 namespace ProyectoFinalXamarin.Services
 {
     class MedicalApiService : IMedicalApiService
-    {   
-        IJsonSerializerService serializer = new JsonSerializerService();
-        private Config config = new Config();
+    {
+        IJsonSerializerService _serializer;
+        IDialogService _dialogService;
 
-
-        public MedicalApiService()
+        public MedicalApiService(IJsonSerializerService serializer, IDialogService dialogService)
         {
-            config = new Config();
-
+            _serializer = serializer;
+            _dialogService = dialogService;
         }
-        //Get Suggestions Task
+
         public async Task<Suggest> GetSuggestAsync()
         {
             HttpClient httpClient = new HttpClient();
-            var response = await httpClient.GetAsync(config.GetSuggestionsURL);
+            var response = await httpClient.GetAsync(Config.GetDiseasesURL);
 
             if (response.IsSuccessStatusCode)
             {
                 var responseString = await response.Content.ReadAsStringAsync();
-                var suggestResponse = serializer.Deserialize<Suggest>(responseString);
+                var suggestResponse = _serializer.Deserialize<Suggest>(responseString);
                 return suggestResponse;
             }
 
@@ -39,11 +42,11 @@ namespace ProyectoFinalXamarin.Services
         public async Task<OutCome> GetOutcomesAsync()
         {
             HttpClient httpClient = new HttpClient();
-            var response = await httpClient.GetAsync(config.GetOutcomesURL);
+            var response = await httpClient.GetAsync(Config.GetOutcomesURL);
             if (response.IsSuccessStatusCode)
             {
                 var responseString = await response.Content.ReadAsStringAsync();
-                var outcomeResponse = serializer.Deserialize<OutCome>(responseString);
+                var outcomeResponse = _serializer.Deserialize<OutCome>(responseString);
                 return outcomeResponse;
             }
             return null;
@@ -52,38 +55,32 @@ namespace ProyectoFinalXamarin.Services
         //Get Diseases Task
         public async Task<Disease> GetDiseasesAsync()
         {
-            var api = RestService.For<IMedicalApiService>(config.GetDiseasesURL);
+            var api = RestService.For<IMedicalApiService>(Config.GetDiseasesURL);
             var response = await api.GetDiseasesAsync();
             return response;
         }
-
-        public async Task<bool> GetSessionAsync()
+        public async Task LoginAsync()
         {
-            HttpClient httpClient = new HttpClient();
-            var response = await httpClient.GetAsync(config.GetSessionURL);
-
-            if (response.IsSuccessStatusCode)
+            
+            string api_key = "defreitas.samuel.99@gmail.com";
+            string secret_key = "Aa97Wtc4HQk26Rwm3";
+            byte[] secretBytes = Encoding.UTF8.GetBytes(secret_key);
+            string computedHashString = "";
+            using (HMACMD5 hmac = new HMACMD5(secretBytes))
             {
-                var responseString = await response.Content.ReadAsStringAsync();
-                var suggestResponse = serializer.Deserialize<InitializeSession>(responseString);
-                config.SessionId = suggestResponse.SessionID;
-                return true;
+                byte[] dataBytes = Encoding.UTF8.GetBytes(Config.LoginUrl);
+                byte[] computedHash = hmac.ComputeHash(dataBytes);
+                computedHashString = Convert.ToBase64String(computedHash);
             }
 
-            return false;
-        }
-
-        public async Task<bool> PostTermsConditionsAsync()
-        {
-            HttpClient httpClient = new HttpClient();
-            var response = await httpClient.PostAsync(config.TermsAndConditionsURL1 + config.SessionId + config.TermsAndConditionsURL2, null);
-
-            if (response.IsSuccessStatusCode)
+            using (WebClient client = new WebClient())
             {
-                return true;
-            }
+                client.Headers["Authorization"] = string.Concat("Bearer ", api_key, ":", computedHashString);
+                string responseString = client.UploadString(Config.LoginUrl, "POST", "");
+                var tokenAuthResponse = _serializer.Deserialize<TokenAuth>(responseString);
+                await SecureStorage.SetAsync("token", tokenAuthResponse.Token);
 
-            return false;
+            }
         }
     }
 }

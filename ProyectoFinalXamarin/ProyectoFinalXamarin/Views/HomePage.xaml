@@ -13,7 +13,7 @@
             <Entry Placeholder="Add a new Symptom" HorizontalOptions="StartAndExpand"/>
             <ImageButton BackgroundColor="#00FFFFFF" Source="addIcon" HorizontalOptions="EndAndExpand" HeightRequest="40" Margin="20,0,0,0"/>
         </StackLayout>
-       
+
         <Label Text="Symptoms added" Grid.Row="1" Grid.Column="0" FontSize="25" HorizontalOptions="CenterAndExpand" Margin="0,70,0,0"/>
 
         <StackLayout Grid.Row="2" Grid.Column="0" Padding="20,0,20,0" Margin="0,30,0,0">
@@ -27,7 +27,7 @@
         
         <StackLayout Grid.Row="3" Grid.Column="0" Orientation="Horizontal" HorizontalOptions="Center" BackgroundColor="#395C7C" Margin="0,90,0,0" HeightRequest="60" Padding="70,0,70,0">
             <StackLayout.GestureRecognizers>
-                <TapGestureRecognizer   Command="{Binding NavigateCommand}"/>
+                <TapGestureRecognizer   Command="{Binding TextCommand}"/>
             </StackLayout.GestureRecognizers>
             
             <Image Source="magnifierIcon" VerticalOptions="Center" HeightRequest="30" HorizontalOptions="Start" Margin="0,0,10,0"/>
