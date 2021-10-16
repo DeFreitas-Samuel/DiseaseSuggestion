@@ -30,12 +30,12 @@
         <Label Text="Symptoms added" Grid.Row="4" Grid.Column="0" FontSize="25" HorizontalOptions="CenterAndExpand" Margin="0,70,0,0"/>
 
         <StackLayout Grid.Row="5" Grid.Column="0" Padding="20,0,20,0" Margin="0,30,0,0">
-            <CollectionView  ItemsSource="{Binding UserSymptoms}" BackgroundColor="#CED4CF" HeightRequest="110">
+            <CollectionView  ItemsSource="{Binding UserSymptoms}" BackgroundColor="#CED4CF">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="{Binding Name}" TextColor="Black"/>
-                            <Button Text="Delete" Command="{Binding Source={x:Reference AddSymptomsPage}, Path=BindingContext.DeleteCommand}" CommandParameter="{Binding}"/>
+                        <StackLayout Orientation="Horizontal" HeightRequest="50" VerticalOptions="Center">
+                            <Label Text="{Binding Name}" TextColor="Black" VerticalOptions="Center"/>
+                            <Button Text="Delete" Command="{Binding Source={x:Reference AddSymptomsPage}, Path=BindingContext.DeleteCommand}" CommandParameter="{Binding}" VerticalOptions="Center"/>
                         </StackLayout>
                         
                     </DataTemplate>
