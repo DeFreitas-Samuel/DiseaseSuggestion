@@ -8,7 +8,7 @@ namespace ProyectoFinalXamarin.Models
     public class Diagnostic
     {
         [JsonPropertyName("Issue")]
-        public Issue Issue { get; set; }
+        public DiagnoseIssue Issue { get; set; }
 
         [JsonPropertyName("Specialisation")]
         public List<Specialisation> Specialisation { get; set; }

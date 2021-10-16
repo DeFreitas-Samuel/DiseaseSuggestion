@@ -31,6 +31,7 @@ namespace ProyectoFinalXamarin.ViewModels
 
         private async void OnSignIn()
         {
+            SecureStorage.RemoveAll();
             string token = await SecureStorage.GetAsync("token");
 
 
@@ -44,7 +45,7 @@ namespace ProyectoFinalXamarin.ViewModels
                         token = await SecureStorage.GetAsync("token");
                         if (!string.IsNullOrEmpty(token))
                         {
-                            await NavigationService.NavigateAsync(NavigationConstants.Paths.HomeNavigation);
+                            await NavigationService.NavigateAsync(NavigationConstants.Paths.HomeTabbed);
                         }
                         else
                         {
@@ -59,7 +60,7 @@ namespace ProyectoFinalXamarin.ViewModels
                 }
                 else 
                 {
-                    await NavigationService.NavigateAsync(NavigationConstants.Paths.HomeNavigation);
+                    await NavigationService.NavigateAsync(NavigationConstants.Paths.HomeTabbed);
                 }
             }
             else 

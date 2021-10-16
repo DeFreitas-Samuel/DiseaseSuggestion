@@ -28,7 +28,9 @@ namespace ProyectoFinalXamarin
         {
             
             containerRegistry.RegisterForNavigation<NavigationPage>();
+            containerRegistry.RegisterForNavigation<HomeTabbedPage>();
             containerRegistry.RegisterForNavigation<HomePage, HomeViewModel>();
+            containerRegistry.RegisterForNavigation<GetIssuesPage, GetIssuesViewModel>();
             containerRegistry.RegisterForNavigation<AnalysisCompletedPage, AnalysisCompletedViewModel>();
             containerRegistry.RegisterForNavigation<RecommendTestPage, RecommendTestViewModel>();
             containerRegistry.RegisterForNavigation<ResultsPage, ResultsViewModel>();

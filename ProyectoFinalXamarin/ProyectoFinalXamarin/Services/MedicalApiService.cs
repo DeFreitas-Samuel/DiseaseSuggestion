@@ -60,5 +60,19 @@ namespace ProyectoFinalXamarin.Services
             var response = await api.DiagnosticsAsync(symptomList, gender, year, token);
             return response;
         }
+
+        public async Task<ObservableCollection<Issue>> GetIssuesAsync(string token)
+        {
+            var api = RestService.For<IMedicalApiService>(Config.BaseUrl);
+            var response = await api.GetIssuesAsync(token);
+            return response;
+        }
+
+        public async Task<Issue> GetIssueAsync(string token, int id)
+        {
+            var api = RestService.For<IMedicalApiService>(Config.BaseUrl);
+            var response = await api.GetIssueAsync(token, id);
+            return response;
+        }
     }
 }

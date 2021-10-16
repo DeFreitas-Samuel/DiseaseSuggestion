@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProyectoFinalXamarin.Views.GetIssuesPage">
+    <ScrollView Padding="10,0,10,0">
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="*">
+            <Picker HorizontalOptions="Fill" Grid.Row="0" Title="Select Issue" ItemsSource="{Binding Issues}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedIssue}"/>
+
+            <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Center" BackgroundColor="#395C7C" HeightRequest="60" Padding="70,0,70,0">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer   Command="{Binding GetIssueCommand}"/>
+                </StackLayout.GestureRecognizers>
+
+                <Image Source="magnifierIcon" VerticalOptions="Center" HeightRequest="30" HorizontalOptions="Start" Margin="0,0,10,0"/>
+                <Label Text="Get description" TextColor="#FFF" FontSize="Large" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+            </StackLayout>
+
+            <Editor AutoSize="TextChanges" IsReadOnly="True" TextColor="Black"  Grid.Row="2" Text="{Binding Description, StringFormat='Description: {0}'}"  HorizontalOptions="Start"/>
+            <Editor AutoSize="TextChanges" IsReadOnly="True" TextColor="Black" Grid.Row="3" Text="{Binding DescriptionShort, StringFormat='Short description: {0}'}"  HorizontalOptions="Start"/>
+            <Editor AutoSize="TextChanges" IsReadOnly="True" TextColor="Black" Grid.Row="4" Text="{Binding MedicalCondition, StringFormat='Medical condition: {0}'}"  HorizontalOptions="Start"/>
+            <Editor AutoSize="TextChanges" IsReadOnly="True" TextColor="Black" Grid.Row="5" Text="{Binding PossibleSymptoms, StringFormat='Possible symptoms: {0}'}"  HorizontalOptions="Start"/>
+            <Editor AutoSize="TextChanges" IsReadOnly="True" TextColor="Black" Grid.Row="6" Text="{Binding ProfName, StringFormat='Professional name: {0}'}"  HorizontalOptions="Start"/>
+            <Editor AutoSize="TextChanges" IsReadOnly="True" TextColor="Black" Grid.Row="7" Text="{Binding Synonyms, StringFormat='Synonyms: {0}'}"  HorizontalOptions="Start"/>
+            <Editor AutoSize="TextChanges" IsReadOnly="True" TextColor="Black" Grid.Row="8" Text="{Binding TreatmentDescription, StringFormat='Treatment description: {0}'}"  HorizontalOptions="Start"/>
+        </Grid>
+    </ScrollView>
+</ContentPage>

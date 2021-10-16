@@ -9,7 +9,9 @@ namespace ProyectoFinalXamarin
         public static class Paths 
         {
             public const string AnalysisCompleted = "AnalysisCompletedPage";
+            public const string HomeTabbed = "HomeTabbedPage";
             public const string Home = "HomePage";
+            public const string GetIssue = "GetIssuePage";
             public const string RecommendTest = "RecommendTestPage";
             public const string Results = "ResultsPage";
             public const string HomeNavigation = "/NavigationPage/HomePage";
