@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Name="AddSymptomsPage"
              x:Class="ProyectoFinalXamarin.Views.HomePage">
     
     <NavigationPage.TitleView>
@@ -32,7 +33,11 @@
             <CollectionView  ItemsSource="{Binding UserSymptoms}" BackgroundColor="#CED4CF" HeightRequest="110">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Label Text="{Binding Name}"/>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding Name}" TextColor="Black"/>
+                            <Button Text="Delete" Command="{Binding Source={x:Reference AddSymptomsPage}, Path=BindingContext.DeleteCommand}" CommandParameter="{Binding}"/>
+                        </StackLayout>
+                        
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

@@ -16,7 +16,8 @@ namespace ProyectoFinalXamarin.ViewModels
     {
         public ICommand SelectCommand { get; }
         public ICommand NavigateCommand { get; }
-        public ICommand AnalizeCommand { get; set; }
+        public ICommand AnalizeCommand { get; }
+        public ICommand DeleteCommand { get; }
         public ObservableCollection<Symptom> Symptoms { get; set; }
         public ObservableCollection<Symptom> UserSymptoms { get; set; } = new ObservableCollection<Symptom>();
         public List<int> SymptomsToSend { get; set; } = new List<int>();
@@ -32,6 +33,7 @@ namespace ProyectoFinalXamarin.ViewModels
             NavigateCommand = new DelegateCommand(OnNavigation);
             SelectCommand = new DelegateCommand(OnSelect);
             AnalizeCommand = new DelegateCommand(OnAnalize);
+            DeleteCommand = new DelegateCommand<Symptom>(OnDelete);
             _medicalApiService = medicalApiService;
             _pageDialogService = pageDialogService;
             _serializer = jsonSerializerService;
@@ -41,6 +43,12 @@ namespace ProyectoFinalXamarin.ViewModels
                 "Female"
             };
             GetSymptoms();           
+        }
+
+        private void OnDelete(Symptom symptom)
+        {
+            UserSymptoms.Remove(symptom);
+            SymptomsToSend.Remove(symptom.Id);
         }
 
         private async void OnAnalize()
