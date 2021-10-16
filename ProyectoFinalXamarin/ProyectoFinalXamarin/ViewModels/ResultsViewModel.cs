@@ -9,6 +9,7 @@ namespace ProyectoFinalXamarin.ViewModels
 {
     public class ResultsViewModel : BaseViewModel, INavigatedAware
     {
+        public int NumberOfDiagnostics { get; set; }
         public ObservableCollection<Diagnostic> Diagnostics { get; set; }
         public ResultsViewModel(INavigationService navigationService) : base(navigationService)
         {
@@ -23,6 +24,7 @@ namespace ProyectoFinalXamarin.ViewModels
         public void OnNavigatedTo(INavigationParameters parameters)
         {
             Diagnostics = (ObservableCollection<Diagnostic>)parameters["Diagnostics"];
+            NumberOfDiagnostics = Diagnostics.Count;
         }
     }
 }

@@ -21,14 +21,14 @@ namespace ProyectoFinalXamarin.ViewModels
         public ObservableCollection<Symptom> Symptoms { get; set; }
         public ObservableCollection<Symptom> UserSymptoms { get; set; } = new ObservableCollection<Symptom>();
         public List<int> SymptomsToSend { get; set; } = new List<int>();
-        public ObservableCollection<string> GenderList { get; set; } 
+        public ObservableCollection<string> GenderList { get; set; }
         public string SelectedGender { get; set; }
         public Symptom SelectedSymptom { get; set; }
         public string Year { get; set; }
         private IJsonSerializerService _serializer;
         private IMedicalApiService _medicalApiService;
         private IPageDialogService _pageDialogService;
-        public HomeViewModel(INavigationService navigationService, IMedicalApiService medicalApiService, IPageDialogService pageDialogService, IJsonSerializerService jsonSerializerService): base(navigationService)
+        public HomeViewModel(INavigationService navigationService, IMedicalApiService medicalApiService, IPageDialogService pageDialogService, IJsonSerializerService jsonSerializerService) : base(navigationService)
         {
             NavigateCommand = new DelegateCommand(OnNavigation);
             SelectCommand = new DelegateCommand(OnSelect);
@@ -42,7 +42,7 @@ namespace ProyectoFinalXamarin.ViewModels
                 "Male",
                 "Female"
             };
-            GetSymptoms();           
+            GetSymptoms();
         }
 
         private void OnDelete(Symptom symptom)
@@ -53,19 +53,47 @@ namespace ProyectoFinalXamarin.ViewModels
 
         private async void OnAnalize()
         {
-            string listOfSymptoms = _serializer.Serialize(SymptomsToSend);
-            var diagnosticResponse =  await _medicalApiService.DiagnosticsAsync(listOfSymptoms, SelectedGender,Year,await SecureStorage.GetAsync("token"));
-            var parameter = new NavigationParameters();
-            parameter.Add("Diagnostics", diagnosticResponse);
-            await NavigationService.NavigateAsync(NavigationConstants.Paths.Results, parameter);
-            
+            bool isYearValid = false;
+            int year = Convert.ToInt32(Year);
+            if (year < 2021 && year > 1900)
+            {
+                isYearValid = true;
+            }
+
+
+            if (SymptomsToSend.Count != 0 && !string.IsNullOrEmpty(SelectedGender) && !string.IsNullOrEmpty(Year) && isYearValid)
+            {
+                string listOfSymptoms = _serializer.Serialize(SymptomsToSend);
+                var diagnosticResponse = await _medicalApiService.DiagnosticsAsync(listOfSymptoms, SelectedGender, Year, await SecureStorage.GetAsync("token"));
+                var parameter = new NavigationParameters();
+                parameter.Add("Diagnostics", diagnosticResponse);
+                await NavigationService.NavigateAsync(NavigationConstants.Paths.Results, parameter);
+            }
+            else if (SymptomsToSend.Count != 0)
+            {
+
+                await _pageDialogService.DisplayAlertAsync("Alert", "Please add at least one symptom", "OK");
+            }
+            else if (string.IsNullOrEmpty(SelectedGender))
+            {
+                await _pageDialogService.DisplayAlertAsync("Alert", "Please choose a gender", "OK");
+            }
+            else if (string.IsNullOrEmpty(Year))
+            {
+                await _pageDialogService.DisplayAlertAsync("Alert", "Please enter your birth year", "OK");
+            }
+            else if (!isYearValid)
+            {
+                await _pageDialogService.DisplayAlertAsync("Alert", "Please enter a valid birth year between 1900-2021", "OK");
+            }
+
         }
 
         private void OnSelect()
         {
             if (SelectedSymptom != null)
             {
-                if (!UserSymptoms.Contains(SelectedSymptom)) 
+                if (!UserSymptoms.Contains(SelectedSymptom))
                 {
                     UserSymptoms.Add(SelectedSymptom);
                 }
@@ -75,7 +103,7 @@ namespace ProyectoFinalXamarin.ViewModels
                 }
                 SelectedSymptom = null;
             }
-            else 
+            else
             {
                 _pageDialogService.DisplayAlertAsync("Alert", "Please select a symptom", "ok");
             }

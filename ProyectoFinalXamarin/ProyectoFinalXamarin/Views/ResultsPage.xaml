@@ -2,16 +2,20 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              x:Class="ProyectoFinalXamarin.Views.ResultsPage">
-    <Grid>
-        <CollectionView ItemsSource="{Binding Diagnostics}">
+    <Grid ColumnDefinitions="*, *"
+          RowDefinitions="*,10*">
+        <Label Text="Number of posible diseases found: " Grid.ColumnSpan="2"/>
+        <Label Text="{Binding NumberOfDiagnostics}" Grid.Column="1" HorizontalTextAlignment="End" HorizontalOptions="End"/>
+        <CollectionView ItemsSource="{Binding Diagnostics}" Grid.Row="1" Grid.ColumnSpan="2">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout>
-                        <Label Text="{Binding Issue.Name}"/>
-                        <Label Text="{Binding Issue.Accuracy}"/>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{Binding DiagnoseIssue.Name}"/>
+                        <Label Text="{Binding DiagnoseIssue.Accuracy, StringFormat='{0:N} %'}"/>
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+
     </Grid>
 </ContentPage>

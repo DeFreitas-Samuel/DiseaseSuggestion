@@ -27,8 +27,9 @@ namespace ProyectoFinalXamarin.Services
         public async Task LoginAsync()
         {
             
-            string api_key = "defreitas.samuel.99@gmail.com";
-            string secret_key = "Aa97Wtc4HQk26Rwm3";
+            string api_key = "YOUR_API_KEY";
+            string secret_key = "YOUR_SECRET_KEY";
+
             byte[] secretBytes = Encoding.UTF8.GetBytes(secret_key);
             string computedHashString = "";
             using (HMACMD5 hmac = new HMACMD5(secretBytes))
