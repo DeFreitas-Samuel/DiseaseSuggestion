@@ -8,7 +8,7 @@
         <Label Text="Symtoms" HorizontalOptions="Center" TextColor="#FFF" FontSize="Large"/>
     </NavigationPage.TitleView>
     
-    <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto" ColumnDefinitions="*">
+    <Grid RowDefinitions="auto, auto, auto, auto, auto,auto,auto" ColumnDefinitions="*">
 
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,50,0,0">
             <Picker Title="Add a new Symptom"  ItemsSource="{Binding Symptoms}" ItemDisplayBinding="{Binding Name}" HorizontalOptions="StartAndExpand" SelectedItem="{Binding SelectedSymptom}"/>

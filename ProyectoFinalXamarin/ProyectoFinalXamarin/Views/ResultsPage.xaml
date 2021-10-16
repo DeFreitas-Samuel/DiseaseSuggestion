@@ -5,14 +5,16 @@
     <Grid ColumnDefinitions="*, *"
           RowDefinitions="*,10*">
         <Label Text="Number of posible diseases found: " Grid.ColumnSpan="2"/>
-        <Label Text="{Binding NumberOfDiagnostics}" Grid.Column="1" HorizontalTextAlignment="End" HorizontalOptions="End"/>
+        <Label Text="{Binding NumberOfDiagnostics}" Grid.Column="1" HorizontalTextAlignment="End" />
         <CollectionView ItemsSource="{Binding Diagnostics}" Grid.Row="1" Grid.ColumnSpan="2">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout Orientation="Horizontal">
-                        <Label Text="{Binding DiagnoseIssue.Name}"/>
-                        <Label Text="{Binding DiagnoseIssue.Accuracy, StringFormat='{0:N} %'}"/>
-                    </StackLayout>
+                    <Frame BorderColor="LightGray" CornerRadius="10" >
+                        <Grid ColumnDefinitions="7*,3*">
+                            <Label Text="{Binding DiagnoseIssue.Name}" WidthRequest="100" LineBreakMode="TailTruncation"/>
+                            <Label Text="{Binding DiagnoseIssue.Accuracy, StringFormat='{0:N} %'}" Grid.Column="1"/>
+                        </Grid>
+                    </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
