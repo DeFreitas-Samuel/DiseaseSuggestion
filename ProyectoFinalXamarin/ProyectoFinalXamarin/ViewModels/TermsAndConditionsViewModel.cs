@@ -1,5 +1,6 @@
 ﻿using Prism.Commands;
 using Prism.Navigation;
+using Prism.Services;
 using Prism.Services.Dialogs;
 using ProyectoFinalXamarin.Services;
 using System;
@@ -13,15 +14,15 @@ namespace ProyectoFinalXamarin.ViewModels
 {
     public class TermsAndConditionsViewModel: BaseViewModel
     {
-        public TermsAndConditionsViewModel(INavigationService navigationService, IMedicalApiService medicalApiService, IDialogService dialogService) : base(navigationService)
+        public TermsAndConditionsViewModel(INavigationService navigationService, IMedicalApiService medicalApiService, IPageDialogService pageDialogService) : base(navigationService)
         {
             _medicalApiService = medicalApiService;
             UrlTapCommand = new DelegateCommand<string>(OnUrlTap);
             SignInCommand = new DelegateCommand(OnSignIn);
-            _dialogService = dialogService;
+            _pageDialogService = pageDialogService;
 
         }
-        private IDialogService _dialogService;
+        private IPageDialogService _pageDialogService;
         public ICommand UrlTapCommand { get; }
         public ICommand SignInCommand { get; }
         public bool CheckBoxIsChecked { get; set; } = false;
@@ -30,7 +31,6 @@ namespace ProyectoFinalXamarin.ViewModels
 
         private async void OnSignIn()
         {
-            SecureStorage.RemoveAll();
             string token = await SecureStorage.GetAsync("token");
 
 
@@ -48,13 +48,13 @@ namespace ProyectoFinalXamarin.ViewModels
                         }
                         else
                         {
-                            await _dialogService.ShowDialogAsync("There was a problem");
+                            await _pageDialogService.DisplayAlertAsync("Alert","There was a problem connecting to the API", "OK");
                         }
                     }
 
                     catch (Exception e)
                     {
-                        await _dialogService.ShowDialogAsync(e.Message);
+                        await _pageDialogService.DisplayAlertAsync("Error", e.Message, "OK");
                     }
                 }
                 else 
@@ -64,7 +64,7 @@ namespace ProyectoFinalXamarin.ViewModels
             }
             else 
             {
-                await _dialogService.ShowDialogAsync("There was a problem with the connection to the internet");
+                await _pageDialogService.DisplayAlertAsync("Alert","There was a problem with the connection to the internet", "OK");
             }
         }
 

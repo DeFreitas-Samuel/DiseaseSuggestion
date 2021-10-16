@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ProyectoFinalXamarin.Services
 {
-    interface IJsonSerializerService
+    public interface IJsonSerializerService
     {
         string Serialize(object payload);
         T Deserialize<T>(string payload);

@@ -17,12 +17,11 @@ namespace ProyectoFinalXamarin.Services
     class MedicalApiService : IMedicalApiService
     {
         IJsonSerializerService _serializer;
-        IPageDialogService _pageDialogService;
+        
 
-        public MedicalApiService(IJsonSerializerService serializer, IPageDialogService pageDialogService)
+        public MedicalApiService(IJsonSerializerService serializer)
         {
             _serializer = serializer;
-            _pageDialogService = pageDialogService;
         }
 
         public async Task LoginAsync()
@@ -52,6 +51,13 @@ namespace ProyectoFinalXamarin.Services
         {
             var api = RestService.For<IMedicalApiService>(Config.BaseUrl);
             var response = await api.GetSymptomsAsync(token);
+            return response;
+        }
+
+        public async Task<ObservableCollection<Diagnostic>> DiagnosticsAsync(string symptomList, string gender, string year, string token)
+        {
+            var api = RestService.For<IMedicalApiService>(Config.BaseUrl);
+            var response = await api.DiagnosticsAsync(symptomList, gender, year, token);
             return response;
         }
     }
