@@ -8,9 +8,9 @@
     </NavigationPage.TitleView>
     
     <Grid RowDefinitions="Auto, Auto, Auto, Auto" ColumnDefinitions="*">
-        
+
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,50,0,0">
-            <Entry Placeholder="Add a new Symptom" HorizontalOptions="StartAndExpand"/>
+            <Picker Title="Add a new Symptom"  ItemsSource="{Binding Symptoms}" ItemDisplayBinding="{Binding Name}" HorizontalOptions="StartAndExpand"/>
             <ImageButton BackgroundColor="#00FFFFFF" Source="addIcon" HorizontalOptions="EndAndExpand" HeightRequest="40" Margin="20,0,0,0"/>
         </StackLayout>
 

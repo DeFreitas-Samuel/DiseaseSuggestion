@@ -1,8 +1,10 @@
-﻿using Prism.Services.Dialogs;
+﻿using Prism.Services;
+using Prism.Services.Dialogs;
 using ProyectoFinalXamarin.Models;
 using Refit;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography;
@@ -15,50 +17,14 @@ namespace ProyectoFinalXamarin.Services
     class MedicalApiService : IMedicalApiService
     {
         IJsonSerializerService _serializer;
-        IDialogService _dialogService;
+        IPageDialogService _pageDialogService;
 
-        public MedicalApiService(IJsonSerializerService serializer, IDialogService dialogService)
+        public MedicalApiService(IJsonSerializerService serializer, IPageDialogService pageDialogService)
         {
             _serializer = serializer;
-            _dialogService = dialogService;
+            _pageDialogService = pageDialogService;
         }
 
-        public async Task<Suggest> GetSuggestAsync()
-        {
-            HttpClient httpClient = new HttpClient();
-            var response = await httpClient.GetAsync(Config.GetDiseasesURL);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseString = await response.Content.ReadAsStringAsync();
-                var suggestResponse = _serializer.Deserialize<Suggest>(responseString);
-                return suggestResponse;
-            }
-
-            return null;
-        }
-
-        //Get Outcomes Task
-        public async Task<OutCome> GetOutcomesAsync()
-        {
-            HttpClient httpClient = new HttpClient();
-            var response = await httpClient.GetAsync(Config.GetOutcomesURL);
-            if (response.IsSuccessStatusCode)
-            {
-                var responseString = await response.Content.ReadAsStringAsync();
-                var outcomeResponse = _serializer.Deserialize<OutCome>(responseString);
-                return outcomeResponse;
-            }
-            return null;
-        }
-
-        //Get Diseases Task
-        public async Task<Disease> GetDiseasesAsync()
-        {
-            var api = RestService.For<IMedicalApiService>(Config.GetDiseasesURL);
-            var response = await api.GetDiseasesAsync();
-            return response;
-        }
         public async Task LoginAsync()
         {
             
@@ -79,8 +45,14 @@ namespace ProyectoFinalXamarin.Services
                 string responseString = client.UploadString(Config.LoginUrl, "POST", "");
                 var tokenAuthResponse = _serializer.Deserialize<TokenAuth>(responseString);
                 await SecureStorage.SetAsync("token", tokenAuthResponse.Token);
-
             }
+        }
+
+        public async Task<ObservableCollection<Symptom>> GetSymptomsAsync(string token)
+        {
+            var api = RestService.For<IMedicalApiService>(Config.BaseUrl);
+            var response = await api.GetSymptomsAsync(token);
+            return response;
         }
     }
 }
